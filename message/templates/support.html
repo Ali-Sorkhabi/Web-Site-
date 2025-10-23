@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="آپلود،صوت،pdf،فیلم،کاربران،به،توسط،وب سایت،عکس">
+    <meta name="description" content="آپلود فیلم صوت عکس pdf توسط کاربران به وب سایت موسیقی">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>موسیقی</title>
+
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <style>
+        .input {
+            background-color:green;
+            color: yellow;
+            border: 2px solid black;
+            padding: 20px;
+            margin: 20px;
+            text-align: center;
+        }
+        </style>
+</head>
+<body>
+    <div class="input">
+<h1><b>تماس با ما</b></h1>
+    </div> 
+    <form method="post">
+<div class="form-row">
+    <button onclick="edit">ویاریش</button>
+        <input type="text" name="firsname" placeholder="نام">
+</div>
+<br/>
+<div class="form-row">
+    <button onclick="edit">ویرایش</button>
+<input type="text" name="lastname" placeholder="نام خانوادگی">
+</div>
+<br/>
+<div class="form-row">
+<button onclick="edit">ویرایش</button>
+<input type="text" name="phonenumber" placeholder="شماره موبایل">
+</div>
+<br/> 
+<div class="from-row">
+<button onclick="edit">ویرایش</button>
+<input type="text" name="email" placeholder="ایمیل">
+</div>
+<br/>
+<div class="form-row">
+<input type="text" name="subject" placeholder="موضوع">
+</div> 
+<br/>
+<select>
+    <option>انتخاب</option>
+    <option>شکایات</option>
+    <option>سوالات</option>
+    <option>انتقادات</option>
+    <option>سایر موارد</option>
+</select>
+<br/>
+<div class="form-row">
+<textarea>
+
+</textarea>
+</div>
+<br/>
+<a href="https://web.whatsapp.com/">
+<input type="submit" value="ارسال">
+</a>
+    </form>
+    <script>
+function editField(button) {
+    const field = button.previousElementSibling;
+    field.removeAttribute('readonly');
+    field.focus();
+}
+</script>
+<button onclick="http://127.0.0.1:8000/home2/">بازگشت</button>
+</body>
+</html>

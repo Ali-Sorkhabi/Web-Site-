@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+                                                                                                    <link rel="icon" type="stylesheet" href="favicon.ico">
+                                                                                                    <link rel="icon" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+                                                                                                    <meta charset="UTF-8">
+                                                                                                    <meta name="keywords" content="آپلود،فیلم،عکس،صوت،فایل متنی،کاربران،سایت،موسیقی،فایل راهنما">
+<meta name="decription" content="کاربران میتوانند عکس، فیلم صوتف فایل متنی در سایت موسیقی آپلود کنند و یک فایل متنی راهنما در اختیار کاربران قرار خواهد گرفت.">
+                                                                                                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                                                                                                    <title>موسیقی</title>
+<style>
+                                                                                                    .main{
+                                                                                                                                                                                                        background-color:blue; 
+                                                                                                                                                                                                        color:yellow; 
+                                                                                                                                                                                                        border:2px solid black;
+                                                                                                                                                                                                        padding: 20px;
+                                                                                                                                                                                                        margin: 20px;
+                                                                                                                                                                                                        text-align:center;
+                                                                                                    }
+</style>
+</head>
+<body> 
+                                                                                                    <header>
+                                                                                                                                                                                                        <form accept="/search/" method="GET">
+                                                                                                                                                                                                                                                                                                            <lable for="search">جستجو</lable>
+                                                                                                                                                                                                                                                                                                            <input type="text" name="search" placeholder="">
+                                                                                                                                                                                                                                                                                                            <input type="submit" value="جستجو">
+
+                                                                                                                                                                                                        </form>
+                                                                                                    &nbsp;
+                                                                                                    <a href="{%% url 'useraccunt' %}">خانه</a>
+                                                                                                    &nbsp;
+                                                                                                    <a href="{% url 'upload' %}">صفحه اصلی</a>
+                                                                                                    &nbsp;
+                                                                                                    <a href="{% url 'support' %}">پشتبانی</a>
+                                                                                                    &nbsp;
+                                                                                                    <a href="{% url 'contact' %}">تماس با ما</a>
+                                                                                                    &nbsp;
+                                                                                                    <img src="{% static 'music.jpg' %}" alt="music images" width="10%">
+                                                                                                    &nbsp;
+                                                                                                    </header>
+                                                                                                    <div class="main">
+<h1><b>موسیقی</b></h1>
+                                                                                                    </div>
+<form method="post" enctype="multipart/form-data">
+{%  csrf_token  %}
+<lable fro="file">انتخاب فایل</lable>
+<input type="file" name="fild" id="file">
+<lable for="sendfile">آپلود کنید</lable>
+<input type="submit" value="اآپلود">
+</form> 
+<br/>
+<p>
+<h1>ما را از شبکه های اجتماعی دنبال کنید</h1>
+<a>
+<i class="fa fa-phone"></i>
+09142868079
+</a> 
+<br/>
+<a hreff="https://web.whatsapp.com/">
+<i class="fa fa-whatsapp"></i>
+واتساپ
+</a>
+<br/>
+<br/>
+<a href="https://www.instagram.com/p/DA6hZHaI_Ya/?igsh=bXJnZzF1ZnRxcHJw">
+<i class="fa fa-instagram"></i>
+انستاگرام
+</a>
+<br/>
+<a href="ali.sorkhabi.1373@gmail.com">
+<i class="fa fa-envelope"></i>
+ایمیل
+</a>
+</p>
+<button onclick="button">بازگشت</button>
+</body>
+</html>
