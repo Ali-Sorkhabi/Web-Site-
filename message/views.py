@@ -1,54 +1,73 @@
-from django.shortcuts import render
-from django.views.generic import TemplateView
+from django.shortcuts import render, redirect
+from django.views import View
 from django.core.files.storage import FileSystemStorage
-from .models import Upload
+from .models import UserName, Upload, Support, Contact, Comment
+from .forms import UploadForm, SupportForm, ContactForm, CommentForm, UserAccountForm
+from django.views.generic import TemplateView
 import uuid
 
 
-# --- صفحه آپلود فایل ---
-class UploadView(TemplateView):
+class UploadView(View):
     template_name = 'upload.html'
 
+    def get(self, request, *args, **kwargs):
+        # فرم دیدگاه
+        comment_form = CommentForm()
+        comments = Comment.objects.all()
+
+        # فایل‌ها با فیلتر درست
+        images = Upload.objects.exclude(image='').exclude(image__isnull=True)
+        audio = Upload.objects.exclude(audio='').exclude(audio__isnull=True)
+        video = Upload.objects.exclude(video='').exclude(video__isnull=True)
+        pdf = Upload.objects.exclude(pdf='').exclude(pdf__isnull=True)
+
+        context = {
+            'form': comment_form,
+            'comments': comments,
+            'images': images,
+            'audio': audio,
+            'video': video,
+            'pdf': pdf,
+        }
+        return render(request, self.template_name, context)
+
     def post(self, request, *args, **kwargs):
-        uploaded_files = request.FILES.getlist('document')  # چند فایل همزمان
-        context = {'images': [], 'audio': [], 'video': [], 'pdf': []}
+        # ثبت دیدگاه
+        if 'submit_comment' in request.POST:
+            comment_form = CommentForm(request.POST)
+            if comment_form.is_valid():
+                comment_form.save()
+                return redirect(request.path)
 
-        if not uploaded_files:
-            return self.render_to_response({'error': 'هیچ فایلی انتخاب نشده است'})
+        # ثبت فایل‌ها
+        uploaded_files = request.FILES.getlist('document')
+        fs = FileSystemStorage()
 
-        for uploaded_file in uploaded_files:
-            fs = FileSystemStorage()
-            unique_filename = f"{uuid.uuid4().hex}_{uploaded_file.name}"
-            filename = fs.save(unique_filename, uploaded_file)
-            file_url = fs.url(filename)
+        for file in uploaded_files:
+            ext = file.name.split('.')[-1].lower()
+            unique_filename = f"{uuid.uuid4().hex}_{file.name}"
+            saved_file = fs.save(unique_filename, file)
 
-            # ذخیره در مدل
-            Upload.objects.create(file=filename)
+            # ذخیره بر اساس نوع فایل
+            if ext in ['jpg', 'jpeg', 'png', 'gif']:
+                Upload.objects.create(title=file.name, image=saved_file)
+            elif ext in ['mp3', 'wav', 'ogg']:
+                Upload.objects.create(title=file.name, audio=saved_file)
+            elif ext in ['mp4', 'mov', 'avi']:
+                Upload.objects.create(title=file.name, video=saved_file)
+            elif ext == 'pdf':
+                Upload.objects.create(title=file.name, pdf=saved_file)
 
-            # تشخیص نوع فایل
-            file_ext = uploaded_file.name.split('.')[-1].lower()
-            if file_ext in ['jpg', 'jpeg', 'png', 'gif']:
-                context['images'].append({'file_url': file_url})
-            elif file_ext in ['mp3', 'wav']:
-                context['audio'].append({'file_url': file_url})
-            elif file_ext in ['mp4', 'mov', 'avi']:
-                context['video'].append({'file_url': file_url})
-            elif file_ext in ['pdf']:
-                context['pdf'].append({'file_url': file_url})
-
-        return self.render_to_response(context)
-
-
-# --- صفحه پشتیبانی ---
-class SupportView(TemplateView):
-    template_name = 'support.html'
+        return redirect(request.path)
 
 
-# --- صفحه تماس با ما ---
 class ContactView(TemplateView):
     template_name = 'contact.html'
 
 
-# --- صفحه حساب کاربری ---
-class UserAccountView(TemplateView):
-    template_name = 'useraccount.html'
+class SupportView(TemplateView):
+    template_name = 'support.html'
+
+
+class UserNameView(TemplateView):
+    template_name = 'username.html'

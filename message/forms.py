@@ -1,6 +1,5 @@
 from django import forms
-from django.contrib.auth.models import User
-from .models import Upload, Support, Contact
+from .models import UserName, Upload, Support, Contact, Comment
 
 # ---------------- Upload Form ----------------
 class UploadForm(forms.ModelForm):
@@ -18,11 +17,10 @@ class UploadForm(forms.ModelForm):
 class SupportForm(forms.ModelForm):
     class Meta:
         model = Support
-        fields = ['first_name', 'last_name', 'phone_number', 'subject', 'message']
+        fields = ['first_name', 'last_name', 'subject', 'message']
         labels = {
             'first_name': 'نام',
             'last_name': 'نام خانوادگی',
-            'phone_number': 'شماره تلفن',
             'subject': 'موضوع',
             'message': 'پیام',
         }
@@ -31,12 +29,11 @@ class SupportForm(forms.ModelForm):
 class ContactForm(forms.ModelForm):
     class Meta:
         model = Contact
-        fields = ['title', 'first_name', 'last_name', 'phone_number', 'subject', 'message']
+        fields = ['title', 'first_name', 'last_name', 'subject', 'message']
         labels = {
             'title': 'عنوان پیام',
             'first_name': 'نام',
             'last_name': 'نام خانوادگی',
-            'phone_number': 'شماره تلفن',
             'subject': 'موضوع',
             'message': 'پیام',
         }
@@ -44,17 +41,29 @@ class ContactForm(forms.ModelForm):
 # ---------------- User Registration Form ----------------
 class UserRegisterForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput, label='رمز عبور')
+
     class Meta:
-        model = User
-        fields = ['username', 'first_name', 'last_name', 'phone_number', 'password']
+        model = UserName
+        fields = ['username', 'first_name', 'last_name', 'password']
         labels = {
             'username': 'نام کاربری',
             'first_name': 'نام',
             'last_name': 'نام خانوادگی',
-            'phone_number': 'شماره تلفن',
         }
 
 # ---------------- User Login Form ----------------
-class UserLoginForm(forms.Form):
+class UserAccountForm(forms.Form):
     username = forms.CharField(label='نام کاربری')
     password = forms.CharField(widget=forms.PasswordInput, label='رمز عبور')
+
+# ---------------- Comment Form ----------------
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['first_name', 'last_name', 'subject', 'message']
+        labels = {
+            'first_name': 'نام',
+            'last_name': 'نام خانوادگی',
+            'subject': 'موضوع',
+            'message': 'پیام',
+        }

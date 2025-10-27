@@ -49,13 +49,23 @@ class Contact(models.Model):
         return self.title
 
 
-# مدل جدید برای Login / کاربر
-class UserAccount(models.Model):
+class UserName(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     phone_number = models.CharField(max_length=15)
     username = models.CharField(max_length=50, unique=True)
-    password = models.CharField(max_length=128)  # می‌تونی بعداً رمزگذاری کنی
+    password = models.CharField(max_length=128)
 
     def __str__(self):
         return self.username
+
+
+class Comment(models.Model): 
+    title = models.CharField(max_length=100)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    subject = models.CharField(max_length=115)
+    message = models.CharField(max_length=255) 
+
+    def __str__(self):
+        return self.title

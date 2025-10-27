@@ -2,22 +2,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="icon" type="images/x-icon" href="favicon.ico">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/svg-with-js.min.css
-
-
-
-">
+  <link rel="icon" type="stylesheet" href="">
+  <link rel="stylesheet" href="">
   <meta charset="UTF-8">
-  <meta name="keywords" content="آپلود،عکس،صوت،فیلم،فایل،فایل راهنما،کاربران،وب سایت موسیقی،اشتراک،کاریشان،علاقمندان،موسیقی">
-  <meta name="description" content="کاربران علاقمندان موسیقی می تواننئد کارهایشان در این وب سایت موسیقی با دیگران به اشتراک بگذارند میتواند کارهایشان را در این وب سایت موسیقی آپلود فیلم صوت فایل عکس بگذارند و فایل راهنما آخر وب سایت است">
+  <meta name="keywords" content="کاربران،تصویر،صوت،فیلم،pdf،آپلود،وب سایت،موسیقی،اشتراک،گذاری،علاقمندان،راهنما">
+  <meta name="description" content="کاربران علاقمندان به موسیقی میتوانند فایل های خودشان با توسط آپلود صوت تصویر فیلم فایل متنی در وب سایت موسیقی آپلود کنند همچنان فایل راهنما در اختیار کاربران قرارخواهد گرفت.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>موسیقی</title>
 <style>
   .main{
     background-color:purple;
     color:wheat;
-    border:2px solid black;
+    border:2px solid black; 
     padding: 20px;
     margin: 20px;
     text-align:center;
@@ -26,13 +22,12 @@
 </head>
 <body>
   <header>
-    <form action="{% url 'upload' %}" method="GET">
-           {% csrf_token %} 
-           <input type="text" name="search" placeholder="جستجو">
-           <input type="submit" value="جستجو">
+    <form action="{% url 'upload' %}">
+<input type="text" name="search" placeholder="جستجو">
+<input type="submit" value="جستجو">
     </form>
-    <center>
-    <div>
+    <div style="text-align:center;">
+      &nbsp;
       <a href="#">خانه</a>
       &nbsp;
       &nbsp;
@@ -41,56 +36,17 @@
       &nbsp;
       &nbsp;
       &nbsp;
-      <a href="{%  url 'support' %}">پشتبانی</a>
+      <a href="{% url 'support' %}">پشتبانی</a>
       &nbsp;
       &nbsp;
       &nbsp;
-      <a href="{% url 'contact' %}">تماس با ما</a>
+      <a href="{% url 'username' %}">تماس با ما</a>
       &nbsp;
-      &nbsp;
-      &nbsp;
-      
     </div>
-    </center>
   </header>
   <div class="main">
-<img src="{% static 'images/s.jpg'  %}" style="float:right;" width="10%">
-    <h1><b>موسیقی</b></h1> 
-    </div>
-
-    <hr>
-<p style="text-align:center;">
-با سلام به سایت موسیقی خوش آمدید
-</p>
-      <form accept="{%  url 'upload' %}" method="post" enctype="multipart/form-data">
-{% csrf_token %} 
-<input type="file" name="document" id="file">
-<input type="submit" value="آپلود">
-      </form>
-        {% if images  %} 
-      <img src="{{ images.file_url }}" alt="images" width="10%" height="120px">
-        {% endif  %} 
-
-        {% if audio %} 
-       <audio controls>
-<source src="{{ audio.file_url }}" type="audio/mp3">
-       </audio>
-       
-       {% endif %} 
-       
-       {% if video %}
-       <video controls>
-<source src="{{ video.file_url }}" type="video/mp4">
-       </video>
-       <!--فایل ویدئویی--> 
-    {% endif %} 
-
-    {% if pdf %}
-    <embed src="{{ pdf.file_url }}" type="application/pdf" width="100%" height="200px">
-    <!--فایل متنی-->
-    {% endif %}
-
-    
-  
+    <b>موسیقی</b>
+    <img src="{% static 'images/s.jpg' %}" alt="image" width="10%" height="120px" style="float:right;">
+     </div>
 </body>
 </html>
