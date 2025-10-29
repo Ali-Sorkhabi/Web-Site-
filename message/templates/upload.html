@@ -1,52 +1,89 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa">
 <head>
-  <link rel="icon" type="stylesheet" href="">
-  <link rel="stylesheet" href="">
   <meta charset="UTF-8">
   <meta name="keywords" content="کاربران،تصویر،صوت،فیلم،pdf،آپلود،وب سایت،موسیقی،اشتراک،گذاری،علاقمندان،راهنما">
-  <meta name="description" content="کاربران علاقمندان به موسیقی میتوانند فایل های خودشان با توسط آپلود صوت تصویر فیلم فایل متنی در وب سایت موسیقی آپلود کنند همچنان فایل راهنما در اختیار کاربران قرارخواهد گرفت.">
+  <meta name="description" content="کاربران علاقمندان به موسیقی می‌توانند فایل‌های خودشان شامل صوت، تصویر، فیلم و فایل متنی را در وب سایت موسیقی آپلود کنند.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>موسیقی</title>
-<style>
-  .main{
-    background-color:purple;
-    color:wheat;
-    border:2px solid black; 
-    padding: 20px;
-    margin: 20px;
-    text-align:center;
-  }
-</style>
+  
+  <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+  <style>
+    .main{
+      background-color: purple;
+      color: wheat;
+      border: 2px solid black; 
+      padding: 60px;
+      margin: 10px;
+      text-align: center;
+    }
+    footer form {
+      float: right;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <form action="{% url 'upload' %}">
-<input type="text" name="search" placeholder="جستجو">
-<input type="submit" value="جستجو">
-    </form>
-    <div style="text-align:center;">
-      &nbsp;
-      <a href="#">خانه</a>
-      &nbsp;
-      &nbsp;
-      &nbsp;
-      <a href="{% url 'upload' %}">صفحه اصلی</a>
-      &nbsp;
-      &nbsp;
-      &nbsp;
-      <a href="{% url 'support' %}">پشتبانی</a>
-      &nbsp;
-      &nbsp;
-      &nbsp;
-      <a href="{% url 'username' %}">تماس با ما</a>
-      &nbsp;
-    </div>
-  </header>
-  <div class="main">
-    <b>موسیقی</b>
-    <img src="{% static 'images/s.jpg' %}" alt="image" width="10%" height="120px" style="float:right;">
-     </div>
+
+<header>
+  <form action="{% url 'upload' %}" method="GET" style="text-align:center; margin-bottom:10px;">
+    <input type="text" name="search" placeholder="جستجو">
+    <input type="submit" value="جستجو">
+  </form>
+
+  <div style="text-align:center; margin-bottom:20px;">
+    <a href="#">خانه</a> &nbsp;&nbsp;&nbsp;
+    <a href="{% url 'upload' %}">صفحه اصلی</a> &nbsp;&nbsp;&nbsp;
+    <a href="{% url 'support' %}">پشتیبانی</a> &nbsp;&nbsp;&nbsp;
+    <a href="{% url 'contact' %}">تماس با ما</a>
+  </div>
+</header>
+
+<div class="main">
+  <img src="{% static 'images/s.jpg' %}" alt="image" width="10%" style="float:right;">
+  <h1><b>موسیقی</b></h1>  
+</div> 
+
+<hr>
+
+<form action="{% url 'upload' %}" method="post" enctype="multipart/form-data" style="margin: 20px 0;">
+  {% csrf_token %} 
+  <input type="file" name="document" id="file">
+  <input type="submit" value="آپلود">
+</form>
+
+{% if images %}
+  <div style="display:flex; flex-wrap:wrap; gap:10px;">
+    {% for item in images %}
+      <img src="{{ item.image.url }}" alt="image" width="10%" height="120px">
+    {% endfor %}
+  </div>
+{% else %}
+  <p>متاسفیم، تصویری برای نمایش وجود ندارد.</p>
+{% endif %}
+
+<hr>
+
+<footer>
+  <form action="{% url 'support' %}" method="post">
+    {% csrf_token %}
+    <h1>دیدگاه تان را بنویسید</h1>
+    <input type="text" name="firstname" placeholder="نام"><br/><br/>
+    <input type="text" name="lastname" placeholder="نام خانوادگی"><br/><br/>
+    <textarea name="message" style="width:100%; height:140px;"></textarea><br/><br/>
+    <input type="submit" value="ارسال">
+    <input type="reset" value="پاک کردن">
+  </form>
+</footer>
+
+<hr>
+<h1>ما را از شبکه‌های اجتماعی دنبال کنید:</h1>
+<a href="#"><i class="fa fa-phone"></i> 09142868079</a><br/>
+<a href="https://web.whatsapp.com/"><i class="fab fa-whatsapp"></i> واتساپ</a><br/>
+<a href="https://www.instagram.com/p/DA6hZHaI_Ya/?igsh=bXJnZzF1ZnRxcHJw"><i class="fab fa-instagram"></i> اینستاگرام</a><br/>
+<a href="mailto:ali.sorkhabi.1373@gmail.com"><i class="fa fa-envelope"></i> ایمیل</a>
+
 </body>
 </html>
